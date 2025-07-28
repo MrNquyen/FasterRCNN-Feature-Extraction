@@ -506,9 +506,9 @@ class FeatureExtractor:
         self.args = self.get_parser()
         self.device = self.args.device
         os.makedirs(self.args.output_folder, exist_ok=True)
-        self.load_model(self.args.from_local)
+        self.load_model()
 
-    def load_model(self, from_local=False):
+    def load_model(self):
         weights_path = {
             "pretrained": "FasterRCNN_ResNet50_FPN_Weights.COCO_V1",
             "weights_backbone": "ResNet50_Weights.IMAGENET1K_V1",
@@ -516,7 +516,7 @@ class FeatureExtractor:
         }
         weights = FasterRCNN_ResNet50_FPN_Weights.verify(weights_path['pretrained'])
         weights_backbone = ResNet50_Weights.verify(weights_path['weights_backbone'])
-        is_trained = False
+        is_trained = weights is not None or weights_backbone is not None
         trainable_backbone_layers = _validate_trainable_layers(None, None, 5, 3)
         trainable_backbone_layers = _validate_trainable_layers(is_trained, trainable_backbone_layers, 5, 3)
         norm_layer = misc_nn_ops.FrozenBatchNorm2d if is_trained else nn.BatchNorm2d
@@ -532,14 +532,8 @@ class FeatureExtractor:
             num_classes=91
         )
         if weights is not None:
-            if from_local:
-                state_dict = torch.load(weights_path["local_model_path"], map_location=self.device)
-                # ic(state_dict)
-                self.model_extracting.load_state_dict(state_dict)
-                self.model_predicting.load_state_dict(state_dict)
-            else:
-                self.model_extracting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
-                self.model_predicting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
+            self.model_extracting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
+            self.model_predicting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
             if weights == FasterRCNN_ResNet50_FPN_Weights.COCO_V1:
                     overwrite_eps(self.model_extracting, 0.0)
                     overwrite_eps(self.model_predicting, 0.0)
