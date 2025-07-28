@@ -10,5 +10,5 @@ FEATURE_NAME="fc6"
 CONF_THRESH=0.5
 DEVICE="cuda:5"
 
-python /data2/npl/ViInforgraphic/workspace/feature_extraction/frcnn/FasterRCNN-Feature-Extraction/extract_features.py --model_file "$MODEL_FILE" --config_file "$CONFIG_FILE" --batch_size $BATCH_SIZE --num_features $NUM_FEATURES --output_folder "$OUTPUT_FOLDER" --image_dir "$IMG_DIR" --feature_name $FEATURE_NAME --confidence_threshold $CONF_THRESH --device $DEVICE --background --from_local
+python /data2/npl/ViInforgraphic/workspace/feature_extraction/frcnn/FasterRCNN-Feature-Extraction/extract_features.py --model_file "$MODEL_FILE" --config_file "$CONFIG_FILE" --batch_size $BATCH_SIZE --num_features $NUM_FEATURES --output_folder "$OUTPUT_FOLDER" --image_dir "$IMG_DIR" --feature_name $FEATURE_NAME --confidence_threshold $CONF_THRESH --device $DEVICE --background 
 
