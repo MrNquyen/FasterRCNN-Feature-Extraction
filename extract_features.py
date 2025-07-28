@@ -559,7 +559,7 @@ class FeatureExtractor:
         parser.add_argument("--feature_name", type=str, help="The name of the feature to extract", default="fc6")
         parser.add_argument("--confidence_threshold", type=float, default=0, help="Threshold of detection confidence above which boxes will be selected")
         parser.add_argument("--background", action="store_true", help="The model will output predictions for the background class when set")
-        parser.add_argument("--from local", action="store_true", help="Load model from local file")
+        parser.add_argument("--from_local", action="store_true", help="Load model from local file")
         parser.add_argument("--device", type=str, default="cuda:5", help="Threshold of detection confidence above which boxes will be selected")
 
         # Parse arguments
