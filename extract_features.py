@@ -506,7 +506,7 @@ class FeatureExtractor:
         self.args = self.get_parser()
         self.device = self.args.device
         os.makedirs(self.args.output_folder, exist_ok=True)
-        self.load_model()
+        self.load_model(self.args.from_local)
 
     def load_model(self, from_local=False):
         weights_path = {
@@ -534,8 +534,8 @@ class FeatureExtractor:
         if weights is not None:
             if from_local:
                 state_dict = torch.load(weights_path["local_model_path"], map_location=self.device)
-                self.model_extracting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
-                self.model_predicting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
+                self.model_extracting.load_state_dict(state_dict)
+                self.model_predicting.load_state_dict(state_dict)
             else:
                 self.model_extracting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
                 self.model_predicting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
