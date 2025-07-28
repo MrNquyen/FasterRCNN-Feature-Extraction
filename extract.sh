@@ -3,7 +3,7 @@
 IMG_DIR="/data2/npl/ViInforgraphic/data/images"
 MODEL_FILE="/data2/npl/ViInforgraphic/workspace/feature_extraction/frcnn/detectron_model_2.pth"
 CONFIG_FILE="/data2/npl/ViInforgraphic/workspace/feature_extraction/frcnn/detectron_model_2.yaml"
-BATCH_SIZE=64
+BATCH_SIZE=32
 NUM_FEATURES=100
 OUTPUT_FOLDER="/data2/npl/ViInfographic/data/faster_rcnn"
 FEATURE_NAME="fc6"
