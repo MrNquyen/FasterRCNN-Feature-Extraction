@@ -517,6 +517,8 @@ class FeatureExtractor:
         weights_backbone = ResNet50_Weights.verify(weights_path['weights_backbone'])
         is_trained = False
         trainable_backbone_layers = _validate_trainable_layers(is_trained, trainable_backbone_layers, 5, 3)
+        trainable_backbone_layers = _validate_trainable_layers(None, None, 5, 3)
+        trainable_backbone_layers = _validate_trainable_layers(is_trained, trainable_backbone_layers, 5, 3)
         norm_layer = misc_nn_ops.FrozenBatchNorm2d if is_trained else nn.BatchNorm2d
 
         backbone = resnet50(weights=weights_backbone, progress=True, norm_layer=norm_layer)
