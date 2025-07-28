@@ -534,6 +534,7 @@ class FeatureExtractor:
         if weights is not None:
             if from_local:
                 state_dict = torch.load(weights_path["local_model_path"], map_location=self.device)
+                ic(state_dict)
                 self.model_extracting.load_state_dict(state_dict)
                 self.model_predicting.load_state_dict(state_dict)
             else:

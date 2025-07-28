@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-IMG_DIR="/data2/npl/ViInforgraphic/data/images/images"
+IMG_DIR="/data2/npl/ViInforgraphic/data/images"
 MODEL_FILE="/data2/npl/ViInforgraphic/workspace/feature_extraction/frcnn/detectron_model_2.pth"
 CONFIG_FILE="/data2/npl/ViInforgraphic/workspace/feature_extraction/frcnn/detectron_model_2.yaml"
 BATCH_SIZE=64
