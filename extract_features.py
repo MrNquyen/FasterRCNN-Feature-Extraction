@@ -508,10 +508,11 @@ class FeatureExtractor:
         os.makedirs(self.args.output_folder, exist_ok=True)
         self.load_model()
 
-    def load_model(self):
+    def load_model(self, from_local=False):
         weights_path = {
             "pretrained": "FasterRCNN_ResNet50_FPN_Weights.COCO_V1",
             "weights_backbone": "ResNet50_Weights.IMAGENET1K_V1",
+            "local_model_path": "/data2/npl/ViInforgraphic/model/fasterrcnn_resnet50_fpn_coco-258fb6c6.pth"
         }
         weights = FasterRCNN_ResNet50_FPN_Weights.verify(weights_path['pretrained'])
         weights_backbone = ResNet50_Weights.verify(weights_path['weights_backbone'])
@@ -531,8 +532,13 @@ class FeatureExtractor:
             num_classes=91
         )
         if weights is not None:
-            self.model_extracting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
-            self.model_predicting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
+            if from_local:
+                state_dict = torch.load(weights_path["local_model_path"], map_location=self.device)
+                self.model_extracting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
+                self.model_predicting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
+            else:
+                self.model_extracting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
+                self.model_predicting.load_state_dict(weights.get_state_dict(progress=True, check_hash=True))
             if weights == FasterRCNN_ResNet50_FPN_Weights.COCO_V1:
                     overwrite_eps(self.model_extracting, 0.0)
                     overwrite_eps(self.model_predicting, 0.0)
